@@ -28,10 +28,12 @@ const getButtonProps = (props) => {
   const buttonProps = {...props};
   const ignoredProps = [
     'onLoad',
+    'shouldOpenModal',
     'onChargeSuccess',
     'onChargeFailure',
     'customMetadata',
     'onPaymentDetected',
+    'onModalClosed',
     'checkoutId',
     'chargeId',
     'disableCaching',
@@ -51,7 +53,7 @@ class CoinbaseCommerceButton extends React.Component<Props, State>{
   }
 
   handleButtonClick = () => {
-    if (this.props.shouldOpenModal && this.props.shouldOpenModal()) {
+    if (!this.props.shouldOpenModal || this.props.shouldOpenModal()) {
       this.setState({showModal: true});
     }
   };
