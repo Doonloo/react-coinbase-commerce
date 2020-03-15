@@ -1,6 +1,6 @@
 {
   "name": "@galactic/react-coinbase-commerce",
-  "version": "1.7.0-0",
+  "version": "1.7.1",
   "description": "A react component to easily embed a Coinbase Commerce Checkout within your application",
   "keywords": [
     "react",

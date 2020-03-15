@@ -11,7 +11,7 @@ type Props = {
   chargeId?: string,
   customMetadata?: string,
   onLoad: () => void,
-  shouldOpenModal: () => boolean;
+  shouldOpenModal: () => boolean | Promise<boolean>;
   onChargeSuccess?: (MessageData) => void,
   onChargeFailure?: (MessageData) => void,
   onPaymentDetected?: (MessageData) => void,
@@ -53,8 +53,21 @@ class CoinbaseCommerceButton extends React.Component<Props, State>{
   }
 
   handleButtonClick = () => {
-    if (!this.props.shouldOpenModal || this.props.shouldOpenModal()) {
+    if (!this.props.shouldOpenModal) {
       this.setState({showModal: true});
+    } else {
+      const shouldOpenModal = this.props.shouldOpenModal();
+      if (shouldOpenModal instanceof Promise) {
+        shouldOpenModal
+          .then(shouldOpen => {
+            this.setState({showModal: shouldOpen});
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      } else {
+        this.setState({showModal: shouldOpenModal});
+      }
     }
   };
 
